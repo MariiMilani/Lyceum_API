@@ -1,0 +1,20 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: lyceum_API
+      POSTGRES_USER: run/secrets/postgres_external_secret_user
+      POSTGRES_PASSWORD: run/secrets/postgres_external_secret
+    ports:
+      - "5432:5432"
+    restart: always
+    secrets:
+      - postgres_external_secret
+      - postgres_external_secret_user
+
+secrets:
+  postgres_external_secret:
+    external: true
+  postgres_external_secret_user:
+    external: true
