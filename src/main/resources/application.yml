@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: Lyceum-API
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lyceum_API
+    username: ${POSTGRES_ROOT_USER}
+    password: ${POSTGRES_ROOT_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-plataform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+  flyway:
+    enable: true
+    location: classpath:db/migration
