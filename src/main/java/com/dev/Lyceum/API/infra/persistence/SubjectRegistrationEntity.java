@@ -27,5 +27,7 @@ public class SubjectRegistrationEntity {
 
     private String grade;
 
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "status_subject_enum")
     private StatusSubject statusSubject;
 }

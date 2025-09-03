@@ -17,7 +17,7 @@ import java.util.List;
 public class EnrollmentEntity {
 
     @Id
-    @Column(length = 8)
+    @Column(length = 16)
     @GeneratedValue(generator = EnrollmentIdGenerator.generatorName)
     private String id;
 

@@ -1,7 +1,8 @@
 package com.dev.Lyceum.API.core.domain;
 
 public enum StatusSubject {
-    FINISHED,
-    INPROGRESS,
-    TODO
+    COMPLETED,
+    FAILED,
+    IN_PROGRESS,
+    REGISTERED
 }

@@ -1,0 +1,3 @@
+CREATE TABLE enrollment(
+    id VARCHAR(16) PRIMARY KEY NOT NULL
+);
