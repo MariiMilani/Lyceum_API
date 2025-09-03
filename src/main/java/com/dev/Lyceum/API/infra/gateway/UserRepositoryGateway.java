@@ -4,7 +4,7 @@ import com.dev.Lyceum.API.core.domain.users.User;
 import com.dev.Lyceum.API.core.gateway.UserGateway;
 import com.dev.Lyceum.API.infra.mapper.UserMapper;
 import com.dev.Lyceum.API.infra.persistence.UserEntity;
-import com.dev.Lyceum.API.infra.persistence.UserRepository;
+import com.dev.Lyceum.API.infra.persistence.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
