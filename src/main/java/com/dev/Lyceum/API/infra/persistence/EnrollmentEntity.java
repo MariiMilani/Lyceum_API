@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Generated;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.IdGeneratorType;
+import org.hibernate.annotations.Target;
 
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class EnrollmentEntity {
 
     @Id
     @Column(length = 16)
-    @GeneratedValue(generator = EnrollmentIdGenerator.generatorName)
+    @EnrollmentIdGenerator.EnrollmentId
     private String id;
 
     @OneToOne(mappedBy = "studentIdentifier")
