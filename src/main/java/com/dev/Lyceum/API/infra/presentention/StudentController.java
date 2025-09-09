@@ -22,7 +22,7 @@ public class StudentController {
     private StudentMapper studentMapper;
 
     @PostMapping("/register")
-    public ResponseEntity<StudentDto> registerStudent (@RequestBody StudentDto request){
+    public ResponseEntity<StudentDto> registerStudent(@RequestBody StudentDto request) {
         Student newStudent = registerStudentUsecase.execute(studentMapper.dtoToDomain(request));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(studentMapper.toDto(newStudent));

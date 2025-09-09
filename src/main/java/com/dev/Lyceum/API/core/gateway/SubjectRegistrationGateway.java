@@ -4,5 +4,5 @@ import com.dev.Lyceum.API.core.domain.SubjectRegistration;
 
 public interface SubjectRegistrationGateway {
 
-    SubjectRegistration createRegistration (SubjectRegistration registration);
+    SubjectRegistration createRegistration(SubjectRegistration registration);
 }

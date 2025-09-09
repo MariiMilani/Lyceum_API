@@ -22,7 +22,7 @@ public class SubjectController {
     private CreateSubjectUsecase createSubjectUsecase;
 
     @PostMapping("/create")
-    public ResponseEntity<SubjectDto> createSubject (@RequestBody SubjectDto subjectDto){
+    public ResponseEntity<SubjectDto> createSubject(@RequestBody SubjectDto subjectDto) {
         Subject newSubject = createSubjectUsecase.execute(subjectMapper.dtoToDomain(subjectDto));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(subjectMapper.toDto(newSubject));

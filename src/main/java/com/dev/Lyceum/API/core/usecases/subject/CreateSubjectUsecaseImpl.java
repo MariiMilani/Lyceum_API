@@ -3,7 +3,7 @@ package com.dev.Lyceum.API.core.usecases.subject;
 import com.dev.Lyceum.API.core.domain.Subject;
 import com.dev.Lyceum.API.core.gateway.SubjectGateway;
 
-public class CreateSubjectUsecaseImpl implements CreateSubjectUsecase{
+public class CreateSubjectUsecaseImpl implements CreateSubjectUsecase {
 
     private final SubjectGateway subjectGateway;
 

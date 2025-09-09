@@ -22,7 +22,7 @@ public class SubjectRegistrationController {
     public SubjectRegistrationMapper subjectRegistrationMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<SubjectRegistrationDto> createRegistration(@RequestBody SubjectRegistrationDto dto){
+    public ResponseEntity<SubjectRegistrationDto> createRegistration(@RequestBody SubjectRegistrationDto dto) {
         SubjectRegistration newRegistration = createRegistrationUsecase.execute(subjectRegistrationMapper.dtoToDomain(dto));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(subjectRegistrationMapper.toDto(newRegistration));

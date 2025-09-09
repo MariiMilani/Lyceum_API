@@ -5,5 +5,5 @@ import com.dev.Lyceum.API.core.domain.users.Student;
 
 public interface AssignEnrollmentToStudentUsecase {
 
-    void execute (Student student, Enrollment enrollment);
+    void execute(Student student, Enrollment enrollment);
 }

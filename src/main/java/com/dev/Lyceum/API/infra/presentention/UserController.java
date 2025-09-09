@@ -22,7 +22,7 @@ public class UserController {
     private UserMapper userMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<UserDto> createUser (@RequestBody UserDto request){
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto request) {
         User newUser = createUserUsecase.execute(userMapper.dtoToDomain(request));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userMapper.toDto(newUser));

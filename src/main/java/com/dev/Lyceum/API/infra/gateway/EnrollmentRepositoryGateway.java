@@ -6,12 +6,9 @@ import com.dev.Lyceum.API.infra.mapper.EnrollmentMapper;
 import com.dev.Lyceum.API.infra.persistence.EnrollmentEntity;
 import com.dev.Lyceum.API.infra.persistence.StudentEntity;
 import com.dev.Lyceum.API.infra.persistence.repositories.EnrollmentRepository;
-import com.dev.Lyceum.API.infra.utils.EnrollmentIdGenerator;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class EnrollmentRepositoryGateway implements EnrollmentGateway {
@@ -28,7 +25,7 @@ public class EnrollmentRepositoryGateway implements EnrollmentGateway {
         StudentEntity student = enrollmentRepository.findByStudentId(enrollment.student().id())
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
 
-        if (student.getUser() == null){
+        if (student.getUser() == null) {
             throw new IllegalStateException("Student must have a user");
         }
 

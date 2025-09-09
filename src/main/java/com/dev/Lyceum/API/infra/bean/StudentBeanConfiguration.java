@@ -17,7 +17,7 @@ public class StudentBeanConfiguration {
     }
 
     @Bean
-    public AssignEnrollmentToStudentUsecase assignEnrollmentToStudentUsecase(StudentGateway studentGateway){
+    public AssignEnrollmentToStudentUsecase assignEnrollmentToStudentUsecase(StudentGateway studentGateway) {
         return new AssignEnrollmentToStudentUsecaseImpl(studentGateway);
     }
 }

@@ -1,7 +1,6 @@
 package com.dev.Lyceum.API.infra.presentention;
 
 import com.dev.Lyceum.API.core.domain.Enrollment;
-import com.dev.Lyceum.API.core.domain.users.Student;
 import com.dev.Lyceum.API.core.usecases.enrollment.CreateEnrollmentUsecase;
 import com.dev.Lyceum.API.core.usecases.student.AssignEnrollmentToStudentUsecase;
 import com.dev.Lyceum.API.infra.mapper.EnrollmentMapper;

@@ -5,7 +5,7 @@ import com.dev.Lyceum.API.core.domain.users.Student;
 
 public interface StudentGateway {
 
-    Student registerStudent (Student student);
+    Student registerStudent(Student student);
 
-    void assignEnrollment (Student student, Enrollment enrollment);
+    void assignEnrollment(Student student, Enrollment enrollment);
 }

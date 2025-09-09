@@ -6,13 +6,9 @@ import com.dev.Lyceum.API.core.gateway.StudentGateway;
 import com.dev.Lyceum.API.infra.mapper.EnrollmentMapper;
 import com.dev.Lyceum.API.infra.mapper.StudentMapper;
 import com.dev.Lyceum.API.infra.persistence.StudentEntity;
-import com.dev.Lyceum.API.infra.persistence.UserEntity;
 import com.dev.Lyceum.API.infra.persistence.repositories.StudentRepository;
-import com.dev.Lyceum.API.infra.persistence.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class StudentRepositoryGateway implements StudentGateway {

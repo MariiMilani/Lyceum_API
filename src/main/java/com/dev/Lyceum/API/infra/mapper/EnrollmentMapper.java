@@ -29,13 +29,13 @@ public class EnrollmentMapper {
 
     public Enrollment entityToDomain(EnrollmentEntity entity) {
 
-        if (entity.getStudent() == null){
+        if (entity.getStudent() == null) {
             throw new EntityNotFoundException("Student not found - EnrollmentMapper");
         }
 
         Enrollment domain = new Enrollment((entity.getId()), studentMapper.entityToDomain(entity.getStudent()), null);
 
-        if (entity.getSubjects() == null){
+        if (entity.getSubjects() == null) {
             return domain;
         }
         List<SubjectRegistration> subjects = entity.getSubjects()
@@ -55,7 +55,7 @@ public class EnrollmentMapper {
 
         EnrollmentEntity domain = new EnrollmentEntity((enrollment.id()), student, null);
 
-        if (enrollment.subjects() != null){
+        if (enrollment.subjects() != null) {
             List<SubjectRegistrationEntity> subjects = enrollment.subjects()
                     .stream()
                     .map(subject -> new SubjectRegistrationEntity(subject.subject().id(), subjectMapper.toEntity(subject.subject()), domain, subject.grade(), subject.statusSubject()))

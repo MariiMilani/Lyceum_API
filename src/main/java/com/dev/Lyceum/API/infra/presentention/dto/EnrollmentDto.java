@@ -8,8 +8,4 @@ import java.util.List;
 public record EnrollmentDto(String id,
                             Student student,
                             List<SubjectRegistration> subjects) {
-
-    /*public EnrollmentDto teste (String id){
-        return new EnrollmentDto(id, this.student, this.subjects);
-    }*/
 }

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class UserBeanConfiguration {
 
     @Bean
-    public CreateUserUsecase createUserUsecase (UserGateway userGateway){
+    public CreateUserUsecase createUserUsecase(UserGateway userGateway) {
         return new CreateUserUsecaseImpl(userGateway);
     }
 }

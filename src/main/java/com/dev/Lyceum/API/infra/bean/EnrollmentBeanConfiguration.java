@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class EnrollmentBeanConfiguration {
 
     @Bean
-    public CreateEnrollmentUsecase createEnrollmentUsecase(EnrollmentGateway enrollmentGateway){
+    public CreateEnrollmentUsecase createEnrollmentUsecase(EnrollmentGateway enrollmentGateway) {
         return new CreateEnrollmentUsecaseImpl(enrollmentGateway);
     }
 }

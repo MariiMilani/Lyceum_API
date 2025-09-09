@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class SubjectBeanConfiguration {
 
     @Bean
-    public CreateSubjectUsecase createSubjectUsecase(SubjectGateway subjectGateway){
+    public CreateSubjectUsecase createSubjectUsecase(SubjectGateway subjectGateway) {
         return new CreateSubjectUsecaseImpl(subjectGateway);
     }
 }

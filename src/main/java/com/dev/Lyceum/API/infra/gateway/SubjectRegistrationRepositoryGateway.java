@@ -27,7 +27,7 @@ public class SubjectRegistrationRepositoryGateway implements SubjectRegistration
                 newRegistration.getGrade(),
                 newRegistration.getStatusSubject().name()
         );
-        /*repository.save(newRegistration);*/
+
         return subjectRegistrationMapper.entityToDomain(newRegistration);
     }
 }

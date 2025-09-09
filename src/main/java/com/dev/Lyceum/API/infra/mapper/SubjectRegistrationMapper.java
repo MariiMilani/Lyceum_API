@@ -41,7 +41,7 @@ public class SubjectRegistrationMapper {
         return new SubjectRegistrationEntity(subjectRegistration.id(), subjectMapper.toEntity(subjectRegistration.subject()), enrollment, subjectRegistration.grade(), subjectRegistration.statusSubject());
     }
 
-    private Optional<EnrollmentEntity> getEnrollment (String id){
+    private Optional<EnrollmentEntity> getEnrollment(String id) {
         return enrollmentRepository.findById(id);
     }
 
