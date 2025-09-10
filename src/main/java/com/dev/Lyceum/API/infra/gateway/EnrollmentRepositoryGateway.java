@@ -10,6 +10,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class EnrollmentRepositoryGateway implements EnrollmentGateway {
 
@@ -21,7 +23,6 @@ public class EnrollmentRepositoryGateway implements EnrollmentGateway {
     @Override
     public Enrollment createEnrollment(Enrollment enrollment) {
 
-
         StudentEntity student = enrollmentRepository.findByStudentId(enrollment.student().id())
                 .orElseThrow(() -> new EntityNotFoundException("Student not found"));
 
@@ -32,10 +33,28 @@ public class EnrollmentRepositoryGateway implements EnrollmentGateway {
         EnrollmentEntity newEnrollment = enrollmentMapper.toEntity(enrollment, student);
         newEnrollment.setStudent(student);
 
-        EnrollmentEntity teste = new EnrollmentEntity();
-        teste.setId(newEnrollment.getId());
-
-        enrollmentRepository.save(teste);
+        enrollmentRepository.save(newEnrollment);
         return enrollmentMapper.entityToDomain(newEnrollment);
+    }
+
+    @Override
+    public List<Enrollment> showAllEnrollments() {
+        return enrollmentRepository.findAll()
+                .stream()
+                .map(enrollmentMapper::entityToDomain)
+                .toList();
+    }
+
+    @Override
+    public String deleteEnrollmentById(String id) {
+        EnrollmentEntity deletedEnrollment = enrollmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Enrollment id not found"));
+
+        if (deletedEnrollment.getStudent() != null) {
+            throw new RuntimeException("Enrollment has a student, please verify the given id");
+        }
+
+        enrollmentRepository.deleteById(id);
+        return deletedEnrollment.getId();
     }
 }

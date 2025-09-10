@@ -15,16 +15,16 @@ public class StudentMapper {
 
     @Autowired
     private UserMapper userMapper;
+
     @Autowired
     private EnrollmentRepository enrollmentRepository;
-    @Autowired
-    private EnrollmentMapper enrollmentMapper;
+
 
     public Student dtoToDomain(StudentDto request) {
         if (request.studentIdentifier() != null) {
-            return new Student(request.id(), request.user(), request.studentIdentifier().id(), request.isActive());
+            return new Student(request.id(), userMapper.dtoToDomain(request.user()), request.studentIdentifier(), request.isActive());
         }
-        return new Student(request.id(), request.user(), null, request.isActive());
+        return new Student(request.id(), userMapper.dtoToDomain(request.user()), null, request.isActive());
     }
 
     public Student entityToDomain(StudentEntity entity) {
@@ -36,12 +36,9 @@ public class StudentMapper {
 
     public StudentDto toDto(Student student) {
         if (student.studentIdentifier() != null) {
-            Optional<EnrollmentEntity> enrollment = getEnrollment(student.studentIdentifier());
-            if (enrollment.isPresent()) {
-                return new StudentDto(student.id(), student.user(), enrollmentMapper.entityToDomain(enrollment.get()), student.isActive());
-            }
+            return new StudentDto(student.id(), userMapper.toDto(student.user()), student.studentIdentifier(), student.isActive());
         }
-        return new StudentDto(student.id(), student.user(), null, student.isActive());
+        return new StudentDto(student.id(), userMapper.toDto(student.user()), null, student.isActive());
     }
 
     public StudentEntity toEntity(Student student) {

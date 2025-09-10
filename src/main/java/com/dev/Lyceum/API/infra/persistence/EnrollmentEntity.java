@@ -1,7 +1,6 @@
 package com.dev.Lyceum.API.infra.persistence;
 
 import com.dev.Lyceum.API.infra.utils.EnrollmentIdGenerator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +21,6 @@ public class EnrollmentEntity {
     private String id;
 
     @OneToOne(mappedBy = "studentIdentifier")
-    @JsonIgnore
     private StudentEntity student;
 
     @OneToMany(mappedBy = "enrollment")

@@ -8,6 +8,8 @@ import com.dev.Lyceum.API.infra.persistence.repositories.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class SubjectRepositoryGateway implements SubjectGateway {
 
@@ -20,5 +22,13 @@ public class SubjectRepositoryGateway implements SubjectGateway {
     public Subject createSubject(Subject subject) {
         SubjectEntity newSubject = repository.save(mapper.toEntity(subject));
         return mapper.entityToDomain(newSubject);
+    }
+
+    @Override
+    public List<Subject> showAllSubjects() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::entityToDomain)
+                .toList();
     }
 }

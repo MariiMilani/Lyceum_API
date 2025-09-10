@@ -8,6 +8,8 @@ import com.dev.Lyceum.API.infra.persistence.repositories.SubjectRegistrationRepo
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class SubjectRegistrationRepositoryGateway implements SubjectRegistrationGateway {
 
@@ -29,5 +31,13 @@ public class SubjectRegistrationRepositoryGateway implements SubjectRegistration
         );
 
         return subjectRegistrationMapper.entityToDomain(newRegistration);
+    }
+
+    @Override
+    public List<SubjectRegistration> allRegistrations() {
+        return repository.findAll()
+                .stream()
+                .map(subjectRegistrationMapper::entityToDomain)
+                .toList();
     }
 }

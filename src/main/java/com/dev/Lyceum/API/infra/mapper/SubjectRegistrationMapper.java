@@ -16,14 +16,12 @@ public class SubjectRegistrationMapper {
 
     @Autowired
     private SubjectMapper subjectMapper;
+
     @Autowired
     private EnrollmentRepository enrollmentRepository;
-    @Autowired
-    private EnrollmentMapper enrollmentMapper;
-
 
     public SubjectRegistration dtoToDomain(SubjectRegistrationDto subjectRegistrationDto) {
-        return new SubjectRegistration(subjectRegistrationDto.id(), subjectRegistrationDto.subject(), subjectRegistrationDto.enrollment().id(), subjectRegistrationDto.grade(), subjectRegistrationDto.statusSubject());
+        return new SubjectRegistration(subjectRegistrationDto.id(), subjectMapper.dtoToDomain(subjectRegistrationDto.subject()), subjectRegistrationDto.enrollment(), subjectRegistrationDto.grade(), subjectRegistrationDto.statusSubject());
     }
 
     public SubjectRegistration entityToDomain(SubjectRegistrationEntity entity) {
@@ -31,8 +29,9 @@ public class SubjectRegistrationMapper {
     }
 
     public SubjectRegistrationDto toDto(SubjectRegistration subjectRegistration) {
-        Optional<EnrollmentEntity> enrollment = getEnrollment(subjectRegistration.enrollment());
-        return new SubjectRegistrationDto(subjectRegistration.id(), subjectRegistration.subject(), enrollmentMapper.entityToDomain(enrollment.get()), subjectRegistration.grade(), subjectRegistration.statusSubject());
+        EnrollmentEntity enrollment = getEnrollment(subjectRegistration.enrollment())
+                .orElseThrow(() -> new EntityNotFoundException("Enrollment " + subjectRegistration.enrollment() + " not found"));
+        return new SubjectRegistrationDto(subjectRegistration.id(), subjectMapper.toDto(subjectRegistration.subject()), enrollment.getId(), subjectRegistration.grade(), subjectRegistration.statusSubject());
     }
 
     public SubjectRegistrationEntity toEntity(SubjectRegistration subjectRegistration) {

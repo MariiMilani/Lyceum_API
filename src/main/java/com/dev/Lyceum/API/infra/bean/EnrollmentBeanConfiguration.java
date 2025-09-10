@@ -1,8 +1,7 @@
 package com.dev.Lyceum.API.infra.bean;
 
 import com.dev.Lyceum.API.core.gateway.EnrollmentGateway;
-import com.dev.Lyceum.API.core.usecases.enrollment.CreateEnrollmentUsecase;
-import com.dev.Lyceum.API.core.usecases.enrollment.CreateEnrollmentUsecaseImpl;
+import com.dev.Lyceum.API.core.usecases.enrollment.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,7 +9,17 @@ import org.springframework.context.annotation.Configuration;
 public class EnrollmentBeanConfiguration {
 
     @Bean
-    public CreateEnrollmentUsecase createEnrollmentUsecase(EnrollmentGateway enrollmentGateway) {
-        return new CreateEnrollmentUsecaseImpl(enrollmentGateway);
+    public CreateEnrollmentUsecase createEnrollmentUsecase(EnrollmentGateway gateway) {
+        return new CreateEnrollmentUsecaseImpl(gateway);
+    }
+
+    @Bean
+    public ShowAllEnrollmentsUsecase showAllEnrollmentsUsecase(EnrollmentGateway gateway) {
+        return new ShowAllEnrollmentsUsecaseImpl(gateway);
+    }
+
+    @Bean
+    public DeleteEnrollmentByIdUsecase deleteEnrollmentByIdUsecase(EnrollmentGateway gateway) {
+        return new DeleteEnrollmentByIdUsecaseImpl(gateway);
     }
 }

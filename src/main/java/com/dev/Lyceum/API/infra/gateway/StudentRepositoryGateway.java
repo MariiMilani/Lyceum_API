@@ -10,6 +10,8 @@ import com.dev.Lyceum.API.infra.persistence.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class StudentRepositoryGateway implements StudentGateway {
 
@@ -33,6 +35,13 @@ public class StudentRepositoryGateway implements StudentGateway {
         studentEntity.setStudentIdentifier(enrollmentMapper.toEntity(enrollment, studentEntity));
 
         repository.save(studentEntity);
+    }
+
+    @Override
+    public List<Student> showAllStudents() {
+        return repository.findAll().stream()
+                .map(studentMapper::entityToDomain)
+                .toList();
     }
 
 
