@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegistrationEntity, Long> {
 
     @Transactional
@@ -19,4 +22,10 @@ public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegi
             @Param("grade") String grade,
             @Param("statusSubject") String statusSubject
     );
+
+    @Query("SELECT s FROM SubjectRegistrationEntity s JOIN FETCH s.subject WHERE s.subject.id = :subjectId")
+    Optional<List<SubjectRegistrationEntity>> findAllRegistrationBySubject(@Param("subjectId") Long subjectId);
+
+    @Query("SELECT s FROM SubjectRegistrationEntity s JOIN FETCH s.enrollment WHERE s.enrollment.id = :enrollmentId")
+    Optional<List<SubjectRegistrationEntity>> findAllRegistrationByEnrollment(@Param("enrollmentId") String enrollmentId);
 }

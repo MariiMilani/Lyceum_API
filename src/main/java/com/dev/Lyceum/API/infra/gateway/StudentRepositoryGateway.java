@@ -3,6 +3,7 @@ package com.dev.Lyceum.API.infra.gateway;
 import com.dev.Lyceum.API.core.domain.Enrollment;
 import com.dev.Lyceum.API.core.domain.users.Student;
 import com.dev.Lyceum.API.core.gateway.StudentGateway;
+import com.dev.Lyceum.API.infra.exception.EntityNotFoundException;
 import com.dev.Lyceum.API.infra.mapper.EnrollmentMapper;
 import com.dev.Lyceum.API.infra.mapper.StudentMapper;
 import com.dev.Lyceum.API.infra.persistence.StudentEntity;
@@ -42,6 +43,13 @@ public class StudentRepositoryGateway implements StudentGateway {
         return repository.findAll().stream()
                 .map(studentMapper::entityToDomain)
                 .toList();
+    }
+
+    @Override
+    public Student showStudentById(Long id) {
+        StudentEntity studentById = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        return studentMapper.entityToDomain(studentById);
     }
 
 

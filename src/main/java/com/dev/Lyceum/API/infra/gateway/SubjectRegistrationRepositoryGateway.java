@@ -1,6 +1,9 @@
 package com.dev.Lyceum.API.infra.gateway;
 
+import com.dev.Lyceum.API.core.domain.Enrollment;
+import com.dev.Lyceum.API.core.domain.Subject;
 import com.dev.Lyceum.API.core.domain.SubjectRegistration;
+import com.dev.Lyceum.API.core.domain.users.Student;
 import com.dev.Lyceum.API.core.gateway.SubjectRegistrationGateway;
 import com.dev.Lyceum.API.infra.mapper.SubjectRegistrationMapper;
 import com.dev.Lyceum.API.infra.persistence.SubjectRegistrationEntity;
@@ -39,5 +42,29 @@ public class SubjectRegistrationRepositoryGateway implements SubjectRegistration
                 .stream()
                 .map(subjectRegistrationMapper::entityToDomain)
                 .toList();
+    }
+
+    @Override
+    public List<SubjectRegistration> registrationsBySubject(Subject subject) {
+        List<SubjectRegistrationEntity> registrations = repository.findAllRegistrationBySubject(subject.id())
+                .orElse(null);
+
+        if (registrations != null) {
+            return registrations
+                    .stream()
+                    .map(subjectRegistrationMapper::entityToDomain)
+                    .toList();
+        }
+        return null;
+    }
+
+    @Override
+    public List<SubjectRegistration> registrationsByEnrollment(Enrollment enrollment) {
+        List<SubjectRegistrationEntity> registrations = repository.findAllRegistrationByEnrollment(enrollment.id())
+                .orElse(null);
+        if (registrations != null){
+            return registrations.stream().map(subjectRegistrationMapper::entityToDomain).toList();
+        }
+        return null;
     }
 }

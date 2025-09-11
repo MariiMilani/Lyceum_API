@@ -9,4 +9,6 @@ public interface SubjectGateway {
     Subject createSubject(Subject subject);
 
     List<Subject> showAllSubjects();
+
+    Subject showSubjectById(Long id);
 }

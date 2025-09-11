@@ -2,7 +2,7 @@ package com.dev.Lyceum.API.core.usecases.enrollment;
 
 import com.dev.Lyceum.API.core.domain.Enrollment;
 
-public interface DeleteEnrollmentByIdUsecase {
+public interface ShowEnrollmentByIdUsecase {
 
-    String execute(Enrollment enrollment);
+    Enrollment execute(String id);
 }

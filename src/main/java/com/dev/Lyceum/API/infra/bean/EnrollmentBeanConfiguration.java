@@ -22,4 +22,9 @@ public class EnrollmentBeanConfiguration {
     public DeleteEnrollmentByIdUsecase deleteEnrollmentByIdUsecase(EnrollmentGateway gateway) {
         return new DeleteEnrollmentByIdUsecaseImpl(gateway);
     }
+
+    @Bean
+    public ShowEnrollmentByIdUsecase showEnrollmentByIdUsecase(EnrollmentGateway gateway) {
+        return new ShowEnrollmentByIdUsecaseImpl(gateway);
+    }
 }

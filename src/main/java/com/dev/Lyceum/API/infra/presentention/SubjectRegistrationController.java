@@ -1,8 +1,14 @@
 package com.dev.Lyceum.API.infra.presentention;
 
+import com.dev.Lyceum.API.core.domain.Enrollment;
+import com.dev.Lyceum.API.core.domain.Subject;
 import com.dev.Lyceum.API.core.domain.SubjectRegistration;
+import com.dev.Lyceum.API.core.usecases.enrollment.ShowEnrollmentByIdUsecase;
+import com.dev.Lyceum.API.core.usecases.subject.ShowSubjectByIdUsecase;
 import com.dev.Lyceum.API.core.usecases.subjectRegistration.CreateRegistrationUsecase;
 import com.dev.Lyceum.API.core.usecases.subjectRegistration.ShowAllRegistrationsUsecase;
+import com.dev.Lyceum.API.core.usecases.subjectRegistration.ShowRegistrationsByEnrollmentUsecase;
+import com.dev.Lyceum.API.core.usecases.subjectRegistration.ShowRegistrationsBySubjectUsecase;
 import com.dev.Lyceum.API.infra.mapper.SubjectRegistrationMapper;
 import com.dev.Lyceum.API.infra.presentention.dto.SubjectRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +31,18 @@ public class SubjectRegistrationController {
     @Autowired
     private ShowAllRegistrationsUsecase showAllRegistrationsUsecase;
 
+    @Autowired
+    private ShowSubjectByIdUsecase showSubjectByIdUsecase;
+
+    @Autowired
+    private ShowRegistrationsBySubjectUsecase showRegistrationsBySubjectUsecase;
+
+    @Autowired
+    private ShowEnrollmentByIdUsecase showEnrollmentByIdUsecase;
+
+    @Autowired
+    private ShowRegistrationsByEnrollmentUsecase showRegistrationsByEnrollmentUsecase;
+
     @PostMapping("/create")
     public ResponseEntity<SubjectRegistrationDto> createRegistration(@RequestBody SubjectRegistrationDto dto) {
         SubjectRegistration newRegistration = createRegistrationUsecase.execute(subjectRegistrationMapper.dtoToDomain(dto));
@@ -39,5 +57,21 @@ public class SubjectRegistrationController {
                 .stream()
                 .map(subjectRegistrationMapper::toDto)
                 .toList());
+    }
+
+    @GetMapping("/search/subject/{id}")
+    public ResponseEntity<List<SubjectRegistrationDto>> showRegistrationsBySubject(@PathVariable Long id) {
+        Subject subjectById = showSubjectByIdUsecase.execute(id);
+        List<SubjectRegistration> registrations = showRegistrationsBySubjectUsecase.execute(subjectById);
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .body(registrations.stream().map(subjectRegistrationMapper::toDto).toList());
+    }
+
+    @GetMapping("/search/enrollment/{id}")
+    public ResponseEntity<List<SubjectRegistrationDto>> showRegistrationsByEnrollment(@PathVariable String id) {
+        Enrollment enrollmentById = showEnrollmentByIdUsecase.execute(id);
+        List<SubjectRegistration> registrations = showRegistrationsByEnrollmentUsecase.execute(enrollmentById);
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .body(registrations.stream().map(subjectRegistrationMapper::toDto).toList());
     }
 }

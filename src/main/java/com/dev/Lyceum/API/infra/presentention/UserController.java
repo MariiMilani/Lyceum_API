@@ -3,6 +3,7 @@ package com.dev.Lyceum.API.infra.presentention;
 import com.dev.Lyceum.API.core.domain.users.User;
 import com.dev.Lyceum.API.core.usecases.user.CreateUserUsecase;
 import com.dev.Lyceum.API.core.usecases.user.ShowAllUsersUsecase;
+import com.dev.Lyceum.API.core.usecases.user.ShowUserByIdUsecase;
 import com.dev.Lyceum.API.infra.mapper.UserMapper;
 import com.dev.Lyceum.API.infra.presentention.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class UserController {
     @Autowired
     private ShowAllUsersUsecase showAllUsersUsecase;
 
+    @Autowired
+    private ShowUserByIdUsecase showUserByIdUsecase;
+
     @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto request) {
         User newUser = createUserUsecase.execute(userMapper.dtoToDomain(request));
@@ -38,5 +42,12 @@ public class UserController {
         return ResponseEntity.ok(allUsers.stream()
                 .map(userMapper::toDto)
                 .toList());
+    }
+
+    @GetMapping("/search/{id}")
+    public ResponseEntity<UserDto> showUserById(@PathVariable Long id) {
+        User user = showUserByIdUsecase.execute(id);
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .body(userMapper.toDto(user));
     }
 }

@@ -4,13 +4,14 @@ import com.dev.Lyceum.API.core.domain.Enrollment;
 import com.dev.Lyceum.API.core.usecases.enrollment.CreateEnrollmentUsecase;
 import com.dev.Lyceum.API.core.usecases.enrollment.DeleteEnrollmentByIdUsecase;
 import com.dev.Lyceum.API.core.usecases.enrollment.ShowAllEnrollmentsUsecase;
+import com.dev.Lyceum.API.core.usecases.enrollment.ShowEnrollmentByIdUsecase;
 import com.dev.Lyceum.API.core.usecases.student.AssignEnrollmentToStudentUsecase;
+import com.dev.Lyceum.API.infra.exception.EntityNotFoundException;
 import com.dev.Lyceum.API.infra.mapper.EnrollmentMapper;
 import com.dev.Lyceum.API.infra.mapper.StudentMapper;
 import com.dev.Lyceum.API.infra.persistence.StudentEntity;
 import com.dev.Lyceum.API.infra.persistence.repositories.StudentRepository;
 import com.dev.Lyceum.API.infra.presentention.dto.EnrollmentDto;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,9 @@ public class EnrollmentController {
     @Autowired
     private DeleteEnrollmentByIdUsecase deleteEnrollmentByIdUsecase;
 
+    @Autowired
+    private ShowEnrollmentByIdUsecase showEnrollmentByIdUsecase;
+
     @PostMapping("/create")
     public ResponseEntity<EnrollmentDto> createEnrollment(@RequestBody EnrollmentDto request) {
 
@@ -65,7 +69,15 @@ public class EnrollmentController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteEnrollmentById(@PathVariable String id) {
-        String deletedEnrollment = deleteEnrollmentByIdUsecase.execute(id);
+        Enrollment enrollmentById = showEnrollmentByIdUsecase.execute(id);
+        String deletedEnrollment = deleteEnrollmentByIdUsecase.execute(enrollmentById);
         return ResponseEntity.ok("Enrollment " + deletedEnrollment + " succesfully deleted");
+    }
+
+    @GetMapping("/search/{id}")
+    public ResponseEntity<EnrollmentDto> showEnrollmentById(@PathVariable String id) {
+        Enrollment enrollmentById = showEnrollmentByIdUsecase.execute(id);
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .body(enrollmentMapper.toDto(enrollmentById));
     }
 }

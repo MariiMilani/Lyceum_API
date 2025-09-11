@@ -1,10 +1,7 @@
 package com.dev.Lyceum.API.infra.bean;
 
 import com.dev.Lyceum.API.core.gateway.SubjectGateway;
-import com.dev.Lyceum.API.core.usecases.subject.CreateSubjectUsecase;
-import com.dev.Lyceum.API.core.usecases.subject.CreateSubjectUsecaseImpl;
-import com.dev.Lyceum.API.core.usecases.subject.ShowAllSubjectsUsecase;
-import com.dev.Lyceum.API.core.usecases.subject.ShowAllSubjectsUsecaseImpl;
+import com.dev.Lyceum.API.core.usecases.subject.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,5 +16,10 @@ public class SubjectBeanConfiguration {
     @Bean
     public ShowAllSubjectsUsecase showAllSubjectsUsecase(SubjectGateway gateway) {
         return new ShowAllSubjectsUsecaseImpl(gateway);
+    }
+
+    @Bean
+    public ShowSubjectByIdUsecase showSubjectByIdUsecase(SubjectGateway gateway) {
+        return new ShowSubjectByIdUsecaseImpl(gateway);
     }
 }

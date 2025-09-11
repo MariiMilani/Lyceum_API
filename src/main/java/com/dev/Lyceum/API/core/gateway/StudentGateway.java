@@ -12,4 +12,6 @@ public interface StudentGateway {
     void assignEnrollment(Student student, Enrollment enrollment);
 
     List<Student> showAllStudents();
+
+    Student showStudentById(Long id);
 }

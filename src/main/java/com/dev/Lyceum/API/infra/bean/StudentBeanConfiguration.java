@@ -22,4 +22,9 @@ public class StudentBeanConfiguration {
     public ShowAllStudentsUsecase showAllStudentsUsecase(StudentGateway gateway) {
         return new ShowAllStudentsUsecaseImpl(gateway);
     }
+
+    @Bean
+    public ShowStudentByIdUsecase showStudentByIdUsecase(StudentGateway gateway) {
+        return new ShowStudentByIdUsecaseImpl(gateway);
+    }
 }

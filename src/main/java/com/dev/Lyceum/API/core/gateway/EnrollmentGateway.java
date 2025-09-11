@@ -10,5 +10,7 @@ public interface EnrollmentGateway {
 
     List<Enrollment> showAllEnrollments();
 
-    String deleteEnrollmentById(String id);
+    String deleteEnrollmentById(Enrollment enrollment);
+
+    Enrollment showEnrollmentById(String id);
 }

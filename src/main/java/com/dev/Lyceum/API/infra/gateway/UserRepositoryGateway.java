@@ -2,6 +2,7 @@ package com.dev.Lyceum.API.infra.gateway;
 
 import com.dev.Lyceum.API.core.domain.users.User;
 import com.dev.Lyceum.API.core.gateway.UserGateway;
+import com.dev.Lyceum.API.infra.exception.EntityNotFoundException;
 import com.dev.Lyceum.API.infra.mapper.UserMapper;
 import com.dev.Lyceum.API.infra.persistence.UserEntity;
 import com.dev.Lyceum.API.infra.persistence.repositories.UserRepository;
@@ -29,5 +30,12 @@ public class UserRepositoryGateway implements UserGateway {
         return repository.findAll().stream()
                 .map(mapper::entityToDomain)
                 .toList();
+    }
+
+    @Override
+    public User showUserById(Long id) {
+        UserEntity userById = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return mapper.entityToDomain(userById);
     }
 }

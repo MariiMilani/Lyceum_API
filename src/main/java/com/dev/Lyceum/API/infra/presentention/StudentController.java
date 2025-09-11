@@ -1,8 +1,11 @@
 package com.dev.Lyceum.API.infra.presentention;
 
 import com.dev.Lyceum.API.core.domain.users.Student;
+import com.dev.Lyceum.API.core.domain.users.User;
 import com.dev.Lyceum.API.core.usecases.student.RegisterStudentUsecase;
 import com.dev.Lyceum.API.core.usecases.student.ShowAllStudentsUsecase;
+import com.dev.Lyceum.API.core.usecases.student.ShowStudentByIdUsecase;
+import com.dev.Lyceum.API.core.usecases.user.ShowUserByIdUsecase;
 import com.dev.Lyceum.API.infra.mapper.StudentMapper;
 import com.dev.Lyceum.API.infra.presentention.dto.StudentDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +28,15 @@ public class StudentController {
     @Autowired
     private ShowAllStudentsUsecase showAllStudentsUsecase;
 
+    @Autowired
+    private ShowStudentByIdUsecase showStudentByIdUsecase;
+
+    @Autowired
+    private ShowUserByIdUsecase showUserByIdUsecase;
+
     @PostMapping("/register")
     public ResponseEntity<StudentDto> registerStudent(@RequestBody StudentDto request) {
+        User userById = showUserByIdUsecase.execute(request.user().id());
         Student newStudent = registerStudentUsecase.execute(studentMapper.dtoToDomain(request));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(studentMapper.toDto(newStudent));
@@ -38,5 +48,12 @@ public class StudentController {
         return ResponseEntity.ok(allStudents.stream()
                 .map(studentMapper::toDto)
                 .toList());
+    }
+
+    @GetMapping("/search/{id}")
+    public ResponseEntity<StudentDto> showStudentById(@PathVariable Long id) {
+        Student studentById = showStudentByIdUsecase.execute(id);
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .body(studentMapper.toDto(studentById));
     }
 }

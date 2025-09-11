@@ -9,4 +9,6 @@ public interface UserGateway {
     User createUser(User user);
 
     List<User> showAllUsers();
+
+    User showUserById(Long id);
 }

@@ -46,15 +46,19 @@ public class EnrollmentRepositoryGateway implements EnrollmentGateway {
     }
 
     @Override
-    public String deleteEnrollmentById(String id) {
-        EnrollmentEntity deletedEnrollment = enrollmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Enrollment id not found"));
-
-        if (deletedEnrollment.getStudent() != null) {
+    public String deleteEnrollmentById(Enrollment enrollment) {
+        if (enrollment.student() != null) {
             throw new RuntimeException("Enrollment has a student, please verify the given id");
         }
 
-        enrollmentRepository.deleteById(id);
-        return deletedEnrollment.getId();
+        enrollmentRepository.deleteById(enrollment.id());
+        return enrollment.id();
+    }
+
+    @Override
+    public Enrollment showEnrollmentById(String id) {
+        EnrollmentEntity enrollmentById = enrollmentRepository.findById(id)
+                .orElseThrow(() -> new com.dev.Lyceum.API.infra.exception.EntityNotFoundException("Enrollment not found"));
+        return enrollmentMapper.entityToDomain(enrollmentById);
     }
 }

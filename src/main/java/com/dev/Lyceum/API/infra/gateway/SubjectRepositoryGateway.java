@@ -2,6 +2,7 @@ package com.dev.Lyceum.API.infra.gateway;
 
 import com.dev.Lyceum.API.core.domain.Subject;
 import com.dev.Lyceum.API.core.gateway.SubjectGateway;
+import com.dev.Lyceum.API.infra.exception.EntityNotFoundException;
 import com.dev.Lyceum.API.infra.mapper.SubjectMapper;
 import com.dev.Lyceum.API.infra.persistence.SubjectEntity;
 import com.dev.Lyceum.API.infra.persistence.repositories.SubjectRepository;
@@ -30,5 +31,12 @@ public class SubjectRepositoryGateway implements SubjectGateway {
                 .stream()
                 .map(mapper::entityToDomain)
                 .toList();
+    }
+
+    @Override
+    public Subject showSubjectById(Long id) {
+        SubjectEntity subjectById = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Subject not found"));
+        return mapper.entityToDomain(subjectById);
     }
 }
