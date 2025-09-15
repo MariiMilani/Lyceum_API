@@ -2,6 +2,7 @@ package com.dev.Lyceum.API.infra.mapper;
 
 import com.dev.Lyceum.API.core.domain.Enrollment;
 import com.dev.Lyceum.API.core.domain.SubjectRegistration;
+import com.dev.Lyceum.API.core.domain.users.Student;
 import com.dev.Lyceum.API.infra.persistence.EnrollmentEntity;
 import com.dev.Lyceum.API.infra.persistence.StudentEntity;
 import com.dev.Lyceum.API.infra.persistence.SubjectRegistrationEntity;
@@ -25,11 +26,11 @@ public class EnrollmentMapper {
         this.subjectRegistrationMapper = subjectRegistrationMapper;
     }
 
-    public Enrollment dtoToDomain(EnrollmentDto enrollmentDto, StudentEntity student) {
+    public Enrollment dtoToDomain(EnrollmentDto enrollmentDto, Student student) {
         if (enrollmentDto.subjects() != null) {
-            return new Enrollment(enrollmentDto.id(), studentMapper.entityToDomain(student), enrollmentDto.subjects().stream().map(subjectRegistrationMapper::dtoToDomain).toList());
+            return new Enrollment(enrollmentDto.id(), student, enrollmentDto.subjects().stream().map(subjectRegistrationMapper::dtoToDomain).toList());
         }
-        return new Enrollment(enrollmentDto.id(), studentMapper.entityToDomain(student), null);
+        return new Enrollment(enrollmentDto.id(), student, null);
     }
 
     public Enrollment entityToDomain(EnrollmentEntity entity) {

@@ -3,6 +3,7 @@ package com.dev.Lyceum.API.infra.gateway;
 import com.dev.Lyceum.API.core.domain.users.User;
 import com.dev.Lyceum.API.core.gateway.UserGateway;
 import com.dev.Lyceum.API.infra.exception.EntityNotFoundException;
+import com.dev.Lyceum.API.infra.exception.NotNullFieldException;
 import com.dev.Lyceum.API.infra.mapper.UserMapper;
 import com.dev.Lyceum.API.infra.persistence.UserEntity;
 import com.dev.Lyceum.API.infra.persistence.repositories.UserRepository;
@@ -21,6 +22,11 @@ public class UserRepositoryGateway implements UserGateway {
 
     @Override
     public User createUser(User user) {
+
+        if (user.name() == null || user.identifier() == null) {
+            throw new NotNullFieldException("Name and Identifier can't be null");
+        }
+
         UserEntity savedUser = repository.save(mapper.toEntity(user));
         return mapper.entityToDomain(savedUser);
     }

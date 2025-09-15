@@ -1,16 +1,15 @@
 package com.dev.Lyceum.API.infra.presentention;
 
 import com.dev.Lyceum.API.core.domain.Enrollment;
+import com.dev.Lyceum.API.core.domain.users.Student;
 import com.dev.Lyceum.API.core.usecases.enrollment.CreateEnrollmentUsecase;
 import com.dev.Lyceum.API.core.usecases.enrollment.DeleteEnrollmentByIdUsecase;
 import com.dev.Lyceum.API.core.usecases.enrollment.ShowAllEnrollmentsUsecase;
 import com.dev.Lyceum.API.core.usecases.enrollment.ShowEnrollmentByIdUsecase;
 import com.dev.Lyceum.API.core.usecases.student.AssignEnrollmentToStudentUsecase;
-import com.dev.Lyceum.API.infra.exception.EntityNotFoundException;
+import com.dev.Lyceum.API.core.usecases.student.ShowStudentByIdUsecase;
 import com.dev.Lyceum.API.infra.mapper.EnrollmentMapper;
 import com.dev.Lyceum.API.infra.mapper.StudentMapper;
-import com.dev.Lyceum.API.infra.persistence.StudentEntity;
-import com.dev.Lyceum.API.infra.persistence.repositories.StudentRepository;
 import com.dev.Lyceum.API.infra.presentention.dto.EnrollmentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,9 +29,6 @@ public class EnrollmentController {
     private StudentMapper studentMapper;
 
     @Autowired
-    private StudentRepository studentRepository;
-
-    @Autowired
     private CreateEnrollmentUsecase createEnrollmentUsecase;
 
     @Autowired
@@ -47,15 +43,21 @@ public class EnrollmentController {
     @Autowired
     private ShowEnrollmentByIdUsecase showEnrollmentByIdUsecase;
 
+    @Autowired
+    private ShowStudentByIdUsecase showStudentByIdUsecase;
+
     @PostMapping("/create")
     public ResponseEntity<EnrollmentDto> createEnrollment(@RequestBody EnrollmentDto request) {
-
-        StudentEntity student = studentRepository.findByIdWithUser(request.student().id())
-                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + request.student().id()));
+        Student student;
+        if (request.student() == null) {
+            student = showStudentByIdUsecase.execute(null);
+        } else {
+            student = showStudentByIdUsecase.execute(request.student().id());
+        }
 
         Enrollment newEnrollment = createEnrollmentUsecase.execute(enrollmentMapper.dtoToDomain(request, student));
 
-        assignEnrollmentToStudentUsecase.execute(studentMapper.entityToDomain(student), newEnrollment);
+        assignEnrollmentToStudentUsecase.execute(student, newEnrollment);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(enrollmentMapper.toDto(newEnrollment));

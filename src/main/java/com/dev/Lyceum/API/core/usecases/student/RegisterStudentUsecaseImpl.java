@@ -1,6 +1,7 @@
 package com.dev.Lyceum.API.core.usecases.student;
 
 import com.dev.Lyceum.API.core.domain.users.Student;
+import com.dev.Lyceum.API.core.domain.users.User;
 import com.dev.Lyceum.API.core.gateway.StudentGateway;
 
 public class RegisterStudentUsecaseImpl implements RegisterStudentUsecase {
@@ -12,7 +13,7 @@ public class RegisterStudentUsecaseImpl implements RegisterStudentUsecase {
     }
 
     @Override
-    public Student execute(Student student) {
-        return studentGateway.registerStudent(student);
+    public Student execute(Student student, User user) {
+        return studentGateway.registerStudent(student, user);
     }
 }

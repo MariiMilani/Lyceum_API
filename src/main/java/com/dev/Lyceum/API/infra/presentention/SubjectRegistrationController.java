@@ -44,8 +44,24 @@ public class SubjectRegistrationController {
     private ShowRegistrationsByEnrollmentUsecase showRegistrationsByEnrollmentUsecase;
 
     @PostMapping("/create")
-    public ResponseEntity<SubjectRegistrationDto> createRegistration(@RequestBody SubjectRegistrationDto dto) {
-        SubjectRegistration newRegistration = createRegistrationUsecase.execute(subjectRegistrationMapper.dtoToDomain(dto));
+    public ResponseEntity<SubjectRegistrationDto> createRegistration(@RequestBody SubjectRegistrationDto request) {
+        Subject subject;
+        Enrollment enrollment;
+
+        if (request.subject() == null) {
+            subject = showSubjectByIdUsecase.execute(null);
+        } else {
+            subject = showSubjectByIdUsecase.execute(request.subject().id());
+        }
+
+        if (request.enrollment() == null) {
+            enrollment = showEnrollmentByIdUsecase.execute(null);
+        } else {
+            enrollment = showEnrollmentByIdUsecase.execute(request.enrollment());
+        }
+
+
+        SubjectRegistration newRegistration = createRegistrationUsecase.execute(subjectRegistrationMapper.dtoToDomain(request), enrollment, subject);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(subjectRegistrationMapper.toDto(newRegistration));
     }

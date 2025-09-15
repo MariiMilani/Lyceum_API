@@ -12,11 +12,20 @@ import java.util.Map;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleUserNotFoundEception(EntityNotFoundException exception) {
+    public ResponseEntity<Map<String, String>> handleUserNotFoundException(EntityNotFoundException exception) {
         Map<String, String> response = new HashMap<>();
         response.put("Error:", exception.getMessage());
         response.put("Message:", "Please verify the id given and try again");
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NotNullFieldException.class)
+    public ResponseEntity<Map<String, String>> handleNotNullFieldException(NotNullFieldException exception) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Error:", exception.getMessage());
+        response.put("Message:", "Please verify all the fields given and try again");
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

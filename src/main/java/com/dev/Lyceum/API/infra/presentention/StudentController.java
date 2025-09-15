@@ -36,8 +36,14 @@ public class StudentController {
 
     @PostMapping("/register")
     public ResponseEntity<StudentDto> registerStudent(@RequestBody StudentDto request) {
-        User userById = showUserByIdUsecase.execute(request.user().id());
-        Student newStudent = registerStudentUsecase.execute(studentMapper.dtoToDomain(request));
+        User userById;
+        if (request.user() == null) {
+            userById = showUserByIdUsecase.execute(null);
+        } else {
+            userById = showUserByIdUsecase.execute(request.user().id());
+        }
+
+        Student newStudent = registerStudentUsecase.execute(studentMapper.dtoToDomain(request), userById);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(studentMapper.toDto(newStudent));
     }

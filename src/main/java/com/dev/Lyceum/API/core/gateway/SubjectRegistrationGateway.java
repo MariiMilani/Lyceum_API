@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SubjectRegistrationGateway {
 
-    SubjectRegistration createRegistration(SubjectRegistration registration);
+    SubjectRegistration createRegistration(SubjectRegistration registration, Enrollment enrollment, Subject subject);
 
     List<SubjectRegistration> allRegistrations();
 
