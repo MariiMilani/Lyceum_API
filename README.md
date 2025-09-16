@@ -241,28 +241,11 @@ Lyceum-API/
 
 ```json
 {
-  "id": 1,
   "subject": {
     "id": 1,
     "name": "Algoritmos e Estrutura de Dados"
   },
-  "enrollment": {
-    "id": "2025abcd75489a2s",
-    "student": {
-      "id": 1,
-      "user": {
-        "id": 1,
-        "name": "João da Silva",
-        "email": "joao_silva@email.com",
-        "identifier": "12345678900"
-      },
-      "studentIdentifier": "2025abcd75489a2s",
-      "isActive": true
-    },
-    "subjects": {
-      "id": 1
-    }
-  },
+  "enrollment": "2025abcd75489a2s",
   "grade": null,
   "subjectStatus": "IN_PROGRESS"
 }
@@ -280,6 +263,7 @@ O projeto utiliza as configurações padrão do Spring Boot. Para personalizar, 
 
 ## 📈 Melhorias Futuras
 
+- [ ] Adicionar novos tipos de usuários. Por exemplo professores (podendo ser antigos alunos ou não)
 - [ ] Implementar frontend
 - [ ] Finalizar CRUD para todas as entidades
 - [ ] Melhorar tratamento de erros
